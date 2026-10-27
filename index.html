@@ -22,7 +22,7 @@
   .escena{position:relative;max-width:900px;margin:0 auto;padding:16px}
   .instruccion{font-family:system-ui,Arial,sans-serif;font-size:14px;color:var(--texto-suave);
     text-align:center;margin:0 0 10px;letter-spacing:.02em}
-  .monumento{position:relative;width:100%;line-height:0}
+  .monumento{position:relative;width:100%;max-width:calc(100vh - 70px);margin:0 auto;line-height:0}
   .monumento img{width:100%;height:auto;display:block;user-select:none}
   .monumento svg{position:absolute;inset:0;width:100%;height:100%}
 
@@ -221,6 +221,16 @@ PERSONAS.forEach(persona => {
 document.getElementById("cerrar").addEventListener("click", cerrarPanel);
 fondoPanel.addEventListener("click", cerrarPanel);
 document.addEventListener("keydown", e => { if (e.key==="Escape") cerrarPanel(); });
+/* Ajusta el monumento para que entre completo en la altura visible (útil dentro de StoryMaps) */
+const foto = document.getElementById("foto");
+function ajustarAlto(){
+  if (!foto.naturalWidth) return;
+  const alto = window.innerHeight - 70;
+  monumento.style.maxWidth = Math.max(260, alto * foto.naturalWidth / foto.naturalHeight) + "px";
+}
+foto.addEventListener("load", ajustarAlto);
+window.addEventListener("resize", ajustarAlto);
+ajustarAlto();
 setTimeout(()=>document.getElementById("escena").classList.remove("pista"), 5200);
 
 /* ---------- Modo edición: abrir el archivo con ?editar=1 al final ---------- */
