@@ -19,10 +19,10 @@
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;background:var(--fondo);color:var(--texto);
     font-family:Georgia,"Times New Roman",serif}
-  .escena{position:relative;max-width:900px;margin:0 auto;padding:16px}
+  .escena{position:relative;max-width:900px;margin:0 auto;padding:16px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
   .instruccion{font-family:system-ui,Arial,sans-serif;font-size:14px;color:var(--texto-suave);
     text-align:center;margin:0 0 10px;letter-spacing:.02em}
-  .monumento{position:relative;width:100%;max-width:calc(100vh - 70px);margin:0 auto;line-height:0}
+  .monumento{position:relative;width:100%;max-width:min(720px, calc(82vh - 50px));margin:0 auto;line-height:0}
   .monumento img{width:100%;height:auto;display:block;user-select:none}
   .monumento svg{position:absolute;inset:0;width:100%;height:100%}
 
@@ -225,8 +225,8 @@ document.addEventListener("keydown", e => { if (e.key==="Escape") cerrarPanel();
 const foto = document.getElementById("foto");
 function ajustarAlto(){
   if (!foto.naturalWidth) return;
-  const alto = window.innerHeight - 70;
-  monumento.style.maxWidth = Math.max(260, alto * foto.naturalWidth / foto.naturalHeight) + "px";
+  const alto = window.innerHeight * 0.82 - 50;
+  monumento.style.maxWidth = Math.min(720, Math.max(260, alto * foto.naturalWidth / foto.naturalHeight)) + "px";
 }
 foto.addEventListener("load", ajustarAlto);
 window.addEventListener("resize", ajustarAlto);
